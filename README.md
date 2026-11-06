@@ -26,5 +26,5 @@ TypeScript, Node.js and Jest. Later exercises add a web framework, a database an
 ```bash
 cd string-calculator
 npm install
-npx jest
+npm run test
 ```
