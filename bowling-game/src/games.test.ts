@@ -28,6 +28,16 @@ describe('game', () => {
         expect(16).toBe(game.getScore());
     });
 
+    it('test one strike', () => {
+        game.roll(10);
+        game.roll(3);
+        game.roll(4);
+
+        rollMany(16, 0);
+
+        expect(24).toBe(game.getScore());
+    });
+
     function rollMany(n: number, pins: number): void {
         for (let i = 0; i < n; i++) {
             game.roll(pins);
