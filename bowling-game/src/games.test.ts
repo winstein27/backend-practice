@@ -1,55 +1,55 @@
 import { Game } from "./game";
 
-describe('game', () => {
-    let game: Game;
+describe("game", () => {
+  let game: Game;
 
-    beforeEach(() => {
-        game = new Game();
-    });
+  beforeEach(() => {
+    game = new Game();
+  });
 
-    it('test score rolling 0 pins', () => {
-        rollMany(20, 0);
+  it("should score 0 when rolling 0 pins", () => {
+    rollMany(20, 0);
 
-        expect(0).toBe(game.getScore());
-    });
+    expect(0).toBe(game.getScore());
+  });
 
-    it('test score rolling 1', () => {
-        rollMany(20, 1);
+  it("should score 20 when rolling only ones", () => {
+    rollMany(20, 1);
 
-        expect(20).toBe(game.getScore());
-    });
+    expect(20).toBe(game.getScore());
+  });
 
-    it('test one spare', () => {
-        rollSpare();
-        game.roll(3);
+  it("should double pins after a spear", () => {
+    rollSpare();
+    game.roll(3);
 
-        rollMany(17, 0);
+    rollMany(17, 0);
 
-        expect(16).toBe(game.getScore());
-    });
+    expect(16).toBe(game.getScore());
+  });
 
-    it('test one strike', () => {
-        rollStrike();
-        game.roll(3);
-        game.roll(4);
+  it("should double pins twice after a strike", () => {
+    rollStrike();
+    game.roll(3);
+    game.roll(4);
 
-        rollMany(16, 0);
+    rollMany(16, 0);
 
-        expect(24).toBe(game.getScore());
-    });
+    expect(24).toBe(game.getScore());
+  });
 
-    function rollMany(n: number, pins: number): void {
-        for (let i = 0; i < n; i++) {
-            game.roll(pins);
-        }
+  function rollMany(n: number, pins: number): void {
+    for (let i = 0; i < n; i++) {
+      game.roll(pins);
     }
+  }
 
-    function rollSpare(): void {
-        game.roll(5);
-        game.roll(5);
-    }
+  function rollSpare(): void {
+    game.roll(5);
+    game.roll(5);
+  }
 
-    function rollStrike(): void {
-        game.roll(10);
-    }
+  function rollStrike(): void {
+    game.roll(10);
+  }
 });
