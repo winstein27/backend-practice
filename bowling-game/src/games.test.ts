@@ -29,7 +29,7 @@ describe('game', () => {
     });
 
     it('test one strike', () => {
-        game.roll(10);
+        rollStrike();
         game.roll(3);
         game.roll(4);
 
@@ -47,5 +47,9 @@ describe('game', () => {
     function rollSpare(): void {
         game.roll(5);
         game.roll(5);
+    }
+
+    function rollStrike(): void {
+        game.roll(10);
     }
 });
