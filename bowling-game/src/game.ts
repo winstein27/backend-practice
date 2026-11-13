@@ -12,6 +12,10 @@ export class Game {
       throw new Error("Pins must be between 0 and 10.");
     }
 
+    if (this.currentRoll === 11) {
+      throw new Error("Game ended.");
+    }
+
     const roll = this.rolls.get(this.currentRoll);
 
     const newRoll = roll === undefined;

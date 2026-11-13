@@ -42,6 +42,11 @@ describe("game", () => {
     expect(() => game.roll(-1)).toThrow("Pins must be between 0 and 10.");
   });
 
+  it("should throws when try to roll after 10 rolls", () => {
+    rollMany(20, 3);
+    expect(() => game.roll(1)).toThrow("Game ended.");
+  });
+
   function rollMany(n: number, pins: number): void {
     for (let i = 0; i < n; i++) {
       game.roll(pins);
