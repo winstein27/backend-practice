@@ -3,24 +3,31 @@ export class Game {
     private rolls;
     
     constructor(){
-        this.currentRoll = 0;
-        this.rolls = new Map<number, number>();
+        this.currentRoll = 1;
+        this.rolls = new Map<number, [number, number]>();
     }
 
     roll(pins: number): void {
-        this.currentRoll += 1;
-        this.rolls.set(this.currentRoll, pins);
+        const roll = this.rolls.get(this.currentRoll);
+        
+        const newRoll = roll === undefined;
+        this.rolls.set(this.currentRoll, newRoll ? [pins, 0] : [roll[0], pins]);
+        
+        if(!newRoll) {
+            this.currentRoll += 1;
+        }
     }
 
     getScore(): number {
         let score = 0;
 
-        for(const roll of this.rolls) {
-            const isAfterSpare = roll[0] > 2 
-                && roll[0] % 2 === 1 
-                && ((this.rolls.get(roll[0] - 1) || 0) + (this.rolls.get(roll[0] - 2) || 0) === 10);
+        for(const [roll, pins] of this.rolls) {
+            const isAfterSpare = roll > 1
+            && (this.rolls.get(roll - 1) !== undefined)
+            && (this.rolls.get(roll - 1)![0] + this.rolls.get(roll - 1)![1] === 10);
+            console.log(isAfterSpare);
             
-            score += roll[1] * (isAfterSpare ? 2 : 1);
+            score += pins[0] * (isAfterSpare ? 2 : 1) + pins[1];
         }
 
         return score;
