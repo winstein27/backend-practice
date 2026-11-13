@@ -47,7 +47,7 @@ describe("game", () => {
     expect(() => game.roll(1)).toThrow("Game ended.");
   });
 
-  it("should allow more balls when spear or strike", () => {
+  it("should allow more balls when spear", () => {
     rollMany(16, 1);
     rollSpare();
     game.roll(5);
@@ -55,6 +55,16 @@ describe("game", () => {
     game.roll(1);
 
     expect(game.getScore()).toBe(40);
+  });
+
+  it("should allow more balls when strike", () => {
+    rollMany(16, 1);
+    rollStrike();
+    game.roll(5);
+    game.roll(3);
+    game.roll(1);
+
+    expect(game.getScore()).toBe(43);
   });
 
   function rollMany(n: number, pins: number): void {
