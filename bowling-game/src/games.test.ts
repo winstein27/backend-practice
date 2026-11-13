@@ -38,6 +38,10 @@ describe("game", () => {
     expect(24).toBe(game.getScore());
   });
 
+  it("should throws when pins are invalid", () => {
+    expect(() => game.roll(-1)).toThrow("Pins must be between 0 and 10.");
+  });
+
   function rollMany(n: number, pins: number): void {
     for (let i = 0; i < n; i++) {
       game.roll(pins);

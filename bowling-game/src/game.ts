@@ -8,6 +8,10 @@ export class Game {
   }
 
   roll(pins: number): void {
+    if (pins < 0 || pins > 10) {
+      throw new Error("Pins must be between 0 and 10.");
+    }
+
     const roll = this.rolls.get(this.currentRoll);
 
     const newRoll = roll === undefined;
