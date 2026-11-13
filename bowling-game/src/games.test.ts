@@ -10,13 +10,13 @@ describe("game", () => {
   it("should score 0 when rolling 0 pins", () => {
     rollMany(20, 0);
 
-    expect(0).toBe(game.getScore());
+    expect(game.getScore()).toBe(0);
   });
 
   it("should score 20 when rolling only ones", () => {
     rollMany(20, 1);
 
-    expect(20).toBe(game.getScore());
+    expect(game.getScore()).toBe(20);
   });
 
   it("should double pins after a spear", () => {
@@ -25,7 +25,7 @@ describe("game", () => {
 
     rollMany(17, 0);
 
-    expect(16).toBe(game.getScore());
+    expect(game.getScore()).toBe(16);
   });
 
   it("should double pins twice after a strike", () => {
@@ -35,7 +35,7 @@ describe("game", () => {
 
     rollMany(16, 0);
 
-    expect(24).toBe(game.getScore());
+    expect(game.getScore()).toBe(24);
   });
 
   it("should throws when pins are invalid", () => {
@@ -54,7 +54,7 @@ describe("game", () => {
     game.roll(3);
     game.roll(1);
 
-    expect(40).toBe(game.getScore());
+    expect(game.getScore()).toBe(40);
   });
 
   function rollMany(n: number, pins: number): void {
