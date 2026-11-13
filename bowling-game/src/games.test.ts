@@ -7,12 +7,6 @@ describe('game', () => {
         game = new Game();
     });
 
-    function rollMany(n: number, pins: number): void {
-        for (let i = 0; i < n; i++) {
-            game.roll(pins);
-        }
-    }
-
     it('test score rolling 0 pins', () => {
         rollMany(20, 0);
 
@@ -26,12 +20,22 @@ describe('game', () => {
     });
 
     it('test one spare', () => {
-        game.roll(5);
-        game.roll(5);
+        rollSpare();
         game.roll(3);
 
         rollMany(17, 0);
 
         expect(16).toBe(game.getScore());
     });
+
+    function rollMany(n: number, pins: number): void {
+        for (let i = 0; i < n; i++) {
+            game.roll(pins);
+        }
+    }
+
+    function rollSpare(): void {
+        game.roll(5);
+        game.roll(5);
+    }
 });
