@@ -24,4 +24,14 @@ describe('game', () => {
 
         expect(20).toBe(game.getScore());
     });
+
+    it('test one spare', () => {
+        game.roll(5);
+        game.roll(5);
+        game.roll(3);
+
+        rollMany(17, 0);
+
+        expect(16).toBe(game.getScore());
+    });
 });
