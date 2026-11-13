@@ -22,13 +22,15 @@ export class Game {
         let score = 0;
 
         for(const [roll, pins] of this.rolls) {
-            const isAfterSpare = roll > 1
-            && (this.rolls.get(roll - 1) !== undefined)
-            && (this.rolls.get(roll - 1)![0] + this.rolls.get(roll - 1)![1] === 10);
-
-            const isAfterStrike = roll > 1
-            && (this.rolls.get(roll - 1) !== undefined)
-            && (this.rolls.get(roll - 1)![0] === 10)
+            const prevRoll = this.rolls.get(roll - 1);
+            
+            let isAfterSpare = false;
+            let isAfterStrike = false;
+            
+            if(prevRoll !== undefined) {
+                isAfterSpare = prevRoll[0] + prevRoll[1] === 10;
+                isAfterStrike = prevRoll[0] === 10;
+            }
             
             score += pins[0] * (isAfterSpare || isAfterStrike ? 2 : 1) + pins[1] * (isAfterStrike ? 2 : 1);
         }
