@@ -4,7 +4,7 @@ export class Game {
 
   constructor() {
     this.currentRoll = 1;
-    this.rolls = new Map<number, [number, number]>();
+    this.rolls = new Map<number, [number, number, number?]>();
   }
 
   roll(pins: number): void {
@@ -13,7 +13,16 @@ export class Game {
     }
 
     if (this.currentRoll === 11) {
-      throw new Error("Game ended.");
+      const roll10 = this.rolls.get(10)!;
+
+      if (!this.lastRollisAfterSpareOrStrike() || roll10.length === 3) {
+        throw new Error("Game ended.");
+      }
+
+      roll10[2] = pins;
+      this.rolls.set(10, roll10);
+
+      return;
     }
 
     const roll = this.rolls.get(this.currentRoll);
@@ -42,9 +51,16 @@ export class Game {
 
       score +=
         pins[0] * (isAfterSpare || isAfterStrike ? 2 : 1) +
-        pins[1] * (isAfterStrike ? 2 : 1);
+        pins[1] * (isAfterStrike ? 2 : 1) +
+        (pins[2] || 0);
     }
 
     return score;
+  }
+
+  private lastRollisAfterSpareOrStrike(): boolean {
+    const prevRoll = this.rolls.get(9);
+
+    return prevRoll !== undefined ? prevRoll[0] + prevRoll[1] === 10 : false;
   }
 }

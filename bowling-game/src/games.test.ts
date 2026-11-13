@@ -47,6 +47,16 @@ describe("game", () => {
     expect(() => game.roll(1)).toThrow("Game ended.");
   });
 
+  it("should allow more balls when spear or strike", () => {
+    rollMany(16, 1);
+    rollSpare();
+    game.roll(5);
+    game.roll(3);
+    game.roll(1);
+
+    expect(40).toBe(game.getScore());
+  });
+
   function rollMany(n: number, pins: number): void {
     for (let i = 0; i < n; i++) {
       game.roll(pins);
