@@ -12,15 +12,15 @@ export class Game {
     roll(pins: number): void {
         this.count += 1;
         this.pins.set(this.count, pins);
+        this.score += this.calculateScore(pins);
+    }
 
-        if(this.count > 2 
+    private calculateScore(pins: number): number {
+        const isAfterSpare = this.count > 2 
             && this.count % 2 === 1 
-            && ((this.pins.get(this.count - 1) || 0) + (this.pins.get(this.count - 2) || 0) === 10)) {
-                this.score += 2 * pins;
-                return;
-        }
+            && ((this.pins.get(this.count - 1) || 0) + (this.pins.get(this.count - 2) || 0) === 10);
 
-        this.score += pins;
+        return pins * (isAfterSpare ? 2 : 1);
     }
 
     getScore(): number {
