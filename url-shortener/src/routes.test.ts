@@ -1,6 +1,6 @@
 import express, { type Express } from "express";
 import request from "supertest";
-import router from "./routes";
+import { createRouter } from "./routes";
 
 describe("routes", () => {
   let app: Express;
@@ -9,8 +9,7 @@ describe("routes", () => {
     app = express();
     app.use(express.json());
 
-    const routes = router;
-    app.use(routes);
+    app.use(createRouter());
   });
 
   it("returns a shortened url", async () => {
@@ -27,7 +26,6 @@ describe("routes", () => {
     const url2 = "https://test2.com";
 
     const res1 = await request(app).post("/shorten-url").send({ url: url1 });
-    console.log(res1);
     const res2 = await request(app).post("/shorten-url").send({ url: url2 });
 
     expect(res1.statusCode).toBe(201);

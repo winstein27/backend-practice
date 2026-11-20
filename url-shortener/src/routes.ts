@@ -1,19 +1,23 @@
 import express from "express";
 
-const router = express.Router();
+export const createRouter = () => {
+  const router = express.Router();
 
-const urlMap = new Map<string, { id: number; shortened: string }>();
+  const urlMap = new Map<string, { id: number; shortened: string }>();
 
-router.post("/shorten-url", (req, res) => {
-  const id = urlMap.size + 1;
-  const shortened = generateShortenedUrl(id);
-  urlMap.set(req.body.url, { id, shortened });
+  router.post("/shorten-url", (req, res) => {
+    const id = urlMap.size + 1;
+    const shortened = generateShortenedUrl(id);
+    urlMap.set(req.body.url, { id, shortened });
 
-  res.statusCode = 201;
-  res.json({ url: shortened });
-});
+    res.statusCode = 201;
+    res.json({ url: shortened });
+  });
 
-router.get("", (req, res) => {});
+  router.get("", (req, res) => {});
+
+  return router;
+};
 
 const CHAR_0 = "0".charCodeAt(0); // 48
 const CHAR_A_UPPER = "A".charCodeAt(0); // 65
@@ -50,5 +54,3 @@ const generateShortenedUrl = (id: number): string => {
 
   return `http://localhost:3000/${code.padStart(MIN_LEN, "0")}`;
 };
-
-export default router;
