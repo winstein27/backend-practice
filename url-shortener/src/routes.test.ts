@@ -38,4 +38,21 @@ describe("routes", () => {
 
     expect(res1.body.url).not.toBe(res2.body.url);
   });
+
+  it("returns the same shortened for the same url", async () => {
+    const url = "https://test.com";
+
+    const res1 = await request(app).post("/shorten-url").send({ url });
+    const res2 = await request(app).post("/shorten-url").send({ url });
+
+    expect(res1.statusCode).toBe(201);
+    expect(res1.body.url).not.toBe(url);
+    expect(res1.body.url.trim().length).toBeGreaterThan(5);
+
+    expect(res2.statusCode).toBe(200);
+    expect(res2.body.url).not.toBe(url);
+    expect(res2.body.url.trim().length).toBeGreaterThan(5);
+
+    expect(res1.body.url).toBe(res2.body.url);
+  });
 });

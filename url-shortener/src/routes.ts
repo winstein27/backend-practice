@@ -6,6 +6,9 @@ export const createRouter = () => {
   const urlMap = new Map<string, { id: number; shortened: string }>();
 
   router.post("/shorten-url", (req, res) => {
+    const mappedUrl = urlMap.get(req.body.url);
+    if (mappedUrl) return res.json({ url: mappedUrl.shortened });
+
     const id = urlMap.size + 1;
     const shortened = generateShortenedUrl(id);
     urlMap.set(req.body.url, { id, shortened });
@@ -36,7 +39,7 @@ const digitToCharBase62 = (digit: number): string => {
 };
 
 const generateShortenedUrl = (id: number): string => {
-  if (!Number.isInteger(id) || id < 0)
+  if (!Number.isSafeInteger(id) || id < 0)
     throw new RangeError("ID must be greater than 0.");
 
   let value = BigInt(id);
